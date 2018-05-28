@@ -1,5 +1,4 @@
-{%- from "mysql/map.jinja" import server with context %}
-{%- set mysql = server %}
+{%- from "mariadb/map.jinja" import server with context %}
 #
 # The MySQL database server configuration file.
 #
@@ -71,21 +70,21 @@ character-set-server=utf8
 #
 # * Fine Tuning
 #
-key_buffer_size        = {{ mysql.get('key_buffer', '16') }}M
-max_allowed_packet     = {{ mysql.get('max_allowed_packet', '16') }}M
-thread_stack           = {{ mysql.get('thread_stack', '192') }}K
-thread_cache_size      = {{ mysql.get('thread_cache_size', '8') }}
+key_buffer_size        = {{ server.get('key_buffer', '16') }}M
+max_allowed_packet     = {{ server.get('max_allowed_packet', '16') }}M
+thread_stack           = {{ server.get('thread_stack', '192') }}K
+thread_cache_size      = {{ server.get('thread_cache_size', '8') }}
 # This replaces the startup script and checks MyISAM tables if needed
 # the first time they are touched
 myisam-recover-options = BACKUP
-max_connections        = {{ mysql.get('max_connections', '100') }}
+max_connections        = {{ server.get('max_connections', '100') }}
 #table_cache           = 64
 #thread_concurrency    = 10
 #
 # * Query Cache Configuration
 #
-query_cache_limit      = {{ mysql.get('query_cache_limit', '1') }}M
-query_cache_size       = {{ mysql.get('query_cache_size', '16') }}M
+query_cache_limit      = {{ server.get('query_cache_limit', '1') }}M
+query_cache_size       = {{ server.get('query_cache_size', '16') }}M
 #
 # * Logging and Replication
 #
