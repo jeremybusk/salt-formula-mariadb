@@ -1,10 +1,10 @@
 
-=============
-MySQL Formula
-=============
+===============
+MariaDB Formula
+===============
 
-MySQL is the world's second most widely used open-source relational database
-management system (RDBMS).
+MAriaDB is a fork of the world's second most widely used open-source relational
+database management system (RDBMS).
 
 
 Sample Metadata
@@ -14,38 +14,38 @@ Sample Metadata
 Standalone setups
 -----------------
 
-Standalone MySQL server
+Standalone MariaDB server
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       server:
         enabled: true
-        version: '5.5'
+        version: 10.1
         admin:
           user: root
           password: pass
         bind:
-          address: '127.0.0.1'
+          address: 127.0.0.1
           port: 3306
         database:
           name:
-            encoding: 'utf8'
+            encoding: utf8mb4
             users:
-            - name: 'username'
-              password: 'password'
-              host: 'localhost'
-              rights: 'all privileges'
+            - name: username
+              password: password
+              host: localhost
+              rights: all privileges
 
 
-MySQL replication master with SSL
+MariaDB replication master with SSL
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       server:
         enabled: true
-        version: 5.5
+        version: 10.1
         replication:
           role: master
         ssl:
@@ -56,17 +56,17 @@ MySQL replication master with SSL
           user: root
           password: pass
         bind:
-          address: '127.0.0.1'
+          address: 127.0.0.1
           port: 3306
 
-MySQL replication slave with SSL
+MariaDB replication slave with SSL
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       server:
         enabled: true
-        version: '5.5'
+        version: 10.1
         replication:
           role: slave
           master: master.salt.id
@@ -79,22 +79,22 @@ MySQL replication slave with SSL
           user: root
           password: pass
         bind:
-          address: '127.0.0.1'
+          address: 127.0.0.1
           port: 3306
 
-Tuned up MySQL server
+Tuned up MariaDB server
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       server:
         enabled: true
-        version: '5.5'
+        version: 10.1
         admin:
           user: root
           password: pass
         bind:
-          address: '127.0.0.1'
+          address: 127.0.0.1
           port: 3306
         key_buffer: 250M
         max_allowed_packet: 32M
@@ -103,29 +103,29 @@ Tuned up MySQL server
         thread_cache_size: 64
         query_cache_limit: 16M
         query_cache_size: 96M
-        force_encoding: utf8
+        force_encoding: utf8mb4
         sql_mode: "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
         database:
           name:
-            encoding: 'utf8'
+            encoding: utf8mb4
             users:
-            - name: 'username'
-              password: 'password'
-              host: 'localhost'
-              rights: 'all privileges'
+            - name: username
+              password: password
+              host: localhost
+              rights: all privileges
 
 
-MySQL Galera cluster
---------------------
+MariaDB Galera cluster
+----------------------
 
-MySQL Galera cluster is configured for ring connection between 3 nodes. Each
+MariaDB Galera cluster is configured for ring connection between 3 nodes. Each
 node should have just one member.
 
 Galera initial server (master)
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       cluster:
         enabled: true
         name: openstack
@@ -140,7 +140,7 @@ Galera initial server (master)
           password: password
      server:
         enabled: true
-        version: 5.5
+        version: 10.1
         admin:
           user: root
           password: pass
@@ -148,40 +148,40 @@ Galera initial server (master)
           address: 192.168.0.1
         database:
           name:
-            encoding: 'utf8'
+            encoding: utf8mb4
             users:
-            - name: 'username'
-              password: 'password'
-              host: 'localhost'
-              rights: 'all privileges'
+            - name: username
+              password: password
+              host: localhost
+              rights: all privileges
 
-MySQL client
-------------
+MariaDB client
+--------------
 
 Database with initial data (Restore DB)
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       client:
         server:
           database:
             admin:
               host: localhost
               port: 3306
-              user: ${_param:mysql_admin_user}
-              password: ${_param:mysql_admin_password}
-              encoding: utf8
+              user: ${_param:mariadb_admin_user}
+              password: ${_param:mariadb_admin_password}
+              encoding: utf8mb4
             database:
               neutron_upgrade:
-                encoding: utf8
+                encoding: utf8mb4
                 users:
                 - name: neutron
-                  password: ${_param:mysql_neutron_password}
+                  password: ${_param:mariadb_neutron_password}
                   host: '%'
                   rights: all
                 - name: neutron
-                  password: ${_param:mysql_neutron_password}
+                  password: ${_param:mariadb_neutron_password}
                   host: ${_param:single_address}
                   rights: all
                 initial_data:
@@ -190,15 +190,15 @@ Database with initial data (Restore DB)
                   host: ${linux:network:fqdn}
                   database: neutron
 
-.. note:: This client role needs to be put directly on dbs node. 
+.. note:: This client role needs to be put directly on dbs node.
           The provided setup restores db named neutron_upgrade with data from db called neutron.
 
 
-Database management on remote MySQL server
+Database management on remote MariaDB server
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       client:
         enabled: true
         server:
@@ -208,10 +208,10 @@ Database management on remote MySQL server
               port: 3306
               user: root
               password: password
-              encoding: utf8
+              encoding: utf8mb4
             database:
               database01:
-                encoding: utf8
+                encoding: utf8mb4
                 users:
                 - name: username
                   password: 'password'
@@ -219,11 +219,11 @@ Database management on remote MySQL server
                   rights: 'all privileges'
 
 
-User management on remote MySQL server
+User management on remote MariaDB server
 
 .. code-block:: yaml
 
-    mysql:
+    mariadb:
       client:
         enabled: true
         server:
@@ -233,7 +233,7 @@ User management on remote MySQL server
               port: 3306
               user: root
               password: password
-              encoding: utf8
+              encoding: utf8mb4
             users:
             - name: user01
               host: "*"
@@ -245,7 +245,7 @@ User management on remote MySQL server
 Sample Usage
 ============
 
-MySQL Galera check sripts
+MariaDB Galera check sripts
 
 .. code-block:: bash
     
@@ -259,7 +259,7 @@ Galera monitoring command, performed from extra server
 
     garbd -a gcomm://ipaddrofone:4567 -g my_wsrep_cluster -l /tmp/1.out -d
 
-1. salt-call state.sls mysql
+1. salt-call state.sls mariadb
 2. Comment everything starting wsrep* (wsrep_provider, wsrep_cluster, wsrep_sst)
 3. service mysql start
 4. run on each node mysql_secure_install and filling root password.
@@ -269,7 +269,7 @@ Galera monitoring command, performed from extra server
     Enter current password for root (enter for none): 
     OK, successfully used password, moving on...
 
-    Setting the root password ensures that nobody can log into the MySQL
+    Setting the root password ensures that nobody can log into the MariaDB
     root user without the proper authorisation.
 
     Set root password? [Y/n] y
@@ -279,8 +279,8 @@ Galera monitoring command, performed from extra server
     Reloading privilege tables..
      ... Success!
 
-    By default, a MySQL installation has an anonymous user, allowing anyone
-    to log into MySQL without having to have a user account created for
+    By default, a MariaDB installation has an anonymous user, allowing anyone
+    to log into MariaDB without having to have a user account created for
     them.  This is intended only for testing, and to make the installation
     go a bit smoother.  You should remove them before moving into a
     production environment.
@@ -294,7 +294,7 @@ Galera monitoring command, performed from extra server
     Disallow root login remotely? [Y/n] n
      ... skipping.
 
-    By default, MySQL comes with a database named 'test' that anyone can
+    By default, MariaDB comes with a database named 'test' that anyone can
     access.  This is also intended only for testing, and should be removed
     before moving into a production environment.
 
@@ -326,6 +326,7 @@ Galera monitoring command, performed from extra server
 More Information
 ================
 
+* https://mariadb.com/kb/en/library/documentation/
 * http://dev.mysql.com/doc/
 * http://www.slideshare.net/osscube/mysql-performance-tuning-top-10-tips
 
