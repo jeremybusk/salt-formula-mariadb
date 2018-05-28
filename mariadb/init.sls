@@ -1,4 +1,4 @@
 include:
-{%- if pillar.mariadb.server is defined %}
+{%- if pillar.mariadb.get('server', None) %}
 - mariadb.server
 {%- endif %}
