@@ -1,3 +1,3 @@
 include:
-- mariadb.server.service
-- mariadb.server.database
+  - mariadb.server.service
+  - mariadb.server.database
