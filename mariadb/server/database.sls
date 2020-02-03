@@ -1,7 +1,7 @@
 {%- from "mariadb/map.jinja" import server, mariadb_connection_args with context %}
 
 {%- if not grains.get('noservices', False) %}
-{%- for database_name, database in server.get('database', {}).iteritems() %}
+{%- for database_name, database in server.get('database', {}).items() %}
 
 mariadb_database_{{ database_name }}:
   mysql_database.present:

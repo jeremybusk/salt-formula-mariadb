@@ -120,7 +120,7 @@ auto_increment_offset    = {{ server.replication.auto_increment.offset }}
 
 {%- if server.replication.role in ['slave'] %}
 relay-log               = /var/log/mysql/mysql-relay-bin.log
-{%- for database_name, database in server.get('database', {}).iteritems() %}
+{%- for database_name, database in server.get('database', {}).items() %}
 binlog_do_db           = {{ database_name }}
 {%- endfor %}
 {%- endif %}
